@@ -1,1 +1,4 @@
 /cawenv
+/bookmyticket/migrations
+/.vscode
+*/__pycache__
