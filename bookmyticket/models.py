@@ -26,8 +26,8 @@ class Cinema(models.Model):
 
 class ShowTime(models.Model):
     #id = models.IntegerField(primary_key=True, auto_created=True)
-    cinema_id = models.ForeignKey(Cinema, on_delete=models.CASCADE)
-    movie_id = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    cinema = models.ForeignKey(Cinema, related_name='showtimes', on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     seats_booked = models.IntegerField(null=False, default=0)
     show_time = models.DateTimeField(null=False)
     end_time = models.DateTimeField(null=False)
@@ -41,7 +41,7 @@ class Booking(models.Model):
     #id = models.IntegerField(primary_key=True, auto_created=True)
     person_name = models.CharField(null=False, max_length=16)
     qty = models.IntegerField(null=False, default=1)
-    total_amt = models.IntegerField(null=False)
+    total_amt = models.IntegerField()
     show = models.ForeignKey(ShowTime, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
