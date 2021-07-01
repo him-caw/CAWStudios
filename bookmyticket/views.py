@@ -70,21 +70,20 @@ def showtimes(request):
         cine_id = request.query_params.get('cine_id', None)
 
         if cine_id is not None:
-            showtimes = showtimes.filter(cinema_id=cine_id)
+            showtimes = showtimes.filter(cinema=cine_id)
         
         movie_id = request.query_params.get('movie_id', None)
 
         if movie_id is not None:
-            showtimes = showtimes.filter(movie_id=movie_id)
+            showtimes = showtimes.filter(movie=movie_id)
 
         showtime_serializer = ShowTimeSerializer(showtimes, many=True)
         return JsonResponse(showtime_serializer.data, safe=False)
 
     elif request.method == 'POST':
         showtime_data = JSONParser().parse(request)
-        movie = Movie.objects.get(id=showtime_data['movie_id'])
 
-        cinema = Cinema.objects.get(id=showtime_data['cinema_id'])
+        cinema = Cinema.objects.get(id=showtime_data['cinema'])
 
         if showtime_data['total_seats'] > cinema.capacity:
             return HttpResponse("Error : Cinema does not hold that capacity", status=status.HTTP_409_CONFLICT)
